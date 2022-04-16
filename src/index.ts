@@ -55,7 +55,7 @@ enum Direction1 {
   left,
 }
 
-console.log(Direction1.left);
+// console.log(Direction1.left);
 
 enum Direction2 {
   top = "UP",
@@ -64,7 +64,7 @@ enum Direction2 {
   left = "LEFT",
 }
 
-console.log(Direction2.left);
+// console.log(Direction2.left);
 
 // Object
 const user: {
@@ -98,7 +98,8 @@ let customerId = cid as number; // in Type assertion we could have a variable ho
 function addNum(x: number, y: number): number {
   return x + y;
 }
-console.log(addNum(4, 9));
+// console.log(addNum(4, 9));
+
 // when using typescript in fuctions you also need to specify the types of data that should be passed in as parameter and if the function returns
 // a value it is also important to state the return type of the function too else if the fuction does not return a value just leave its return
 // type as void
@@ -107,7 +108,8 @@ console.log(addNum(4, 9));
 function send(message: string | number) {
   console.log(message);
 }
-send("I am here already");
+
+// send("I am here already");
 
 // Interfaces
 interface UserInterface {
@@ -130,4 +132,126 @@ interface MathFunc {
 }
 
 const add: MathFunc = (x: number, y: number): number => x + y;
-console.log(add(2, 7));
+// console.log(add(2, 7));
+
+
+// We could also have an interface for a class
+interface PersonInterface {
+  id: number;
+  name: string;
+  isDeveloper?: boolean
+  occupation: string
+
+  register(): string // we can also incude methods and specify the type of data they return
+
+}
+
+/*  in order for us to use the interface we just created for the person class we cannot just do the regular appending 
+
+  eg 
+
+  class Person: PersonInterface {
+   id
+   name
+ }
+
+ instead we make use of the implements keyword as shown below
+
+class Person implements PersonInterface { 
+    protected id
+    private name
+    isDeveloper?
+    occupation
+
+    constructor(id, name, isDeveloper, occupation){
+        this.id = id
+        this.name = name
+        this.isDeveloper = true
+        this.occupation = occupation
+    }
+
+    register() {
+      console.log(`${this.name} has been registered successfully`);
+      
+    }
+}
+
+
+*/
+
+
+
+// Classes
+class Person { 
+// there is what we call access or data modifiers 
+// these variable can be accessed and changed or modified from anywhere within or outside the class but we could also specify if these aaccessed varibles could or should be modifed or not
+// by using some keywords in front of them
+    protected id: number   // the private and protected variables can only be accessed or modified within the class or and class that is extended from it
+    private name: string
+    isDeveloper: boolean
+    occupation: string
+
+    constructor(id:number, name:string, isDeveloper:boolean, occupation:string){ // Types are always passed in for variables / expected values
+        this.id = id
+        this.name = name
+        this.isDeveloper = isDeveloper
+        this.occupation = occupation
+    }
+
+    register() {
+      console.log(`${this.name} has been registered successfully`);
+      
+    }
+}
+
+
+const Skilful = new Person(3, 'skilful', true, 'developer')
+const Don = new Person(1, 'don', true, 'music director')
+
+Skilful.occupation = 'Athlete' // this is possible because we could actually access and modify the Skilful object 
+                        // but there is a way we could actually prevent that if we wand to by using the private keyword
+
+// console.log(Skilful, Don)
+
+// Don.register()  Don is already a new object generated from the Person class, 
+               // calling the register method on the Don object which already has a name property makes it possible to log a message which says "don has been registered successfully"
+
+
+// Extending a class 
+class Employee extends Person {
+  position: string
+
+  constructor(id:number, name:string, isDeveloper:boolean, occupation:string, position:string) {
+    super(id, name, isDeveloper, occupation)
+    this.position = position
+  }
+}
+
+const emply = new Employee(12, 'Don Jazzy', false, 'musician', 'manager')
+// console.log(emply);
+// emply.register()
+
+// Generics 
+function getArray(items:any[]):any[]{
+  return new Array().concat(items)
+}
+
+let numArray = getArray([1, 3, 5, 7])
+let strArray = getArray(['don', 'williams', 'will'])
+
+numArray.push('four') // valid
+strArray.push(6) // valid
+
+// Using placeholders
+
+function getArray1<T>(items:T[]):T[]{ // instead of using the any type when you intend to change the data type later it is better to use a placeholder
+  return new Array().concat(items)
+}
+
+let numArray1 = getArray1<number>([1, 3, 5, 7])
+let strArray1 = getArray1<string>(['don', 'williams', 'will'])
+
+// numArray1.push('four') // invalid
+// strArray1.push(6) // invalid
+
+
