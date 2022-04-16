@@ -1,0 +1,24 @@
+** To set install typescript for your project run the following command 
+yarn add typescript
+
+** To install typescript globally on your computer run the following command
+yarn add -g typescript
+
+** To check the version of typescript installed on your computer or project run the following command
+tsc -v
+
+you will get some errors here if your PATH is not set -
+Errors like 
+* $sudo :batch command not found
+* tsc is not an internal command etc, if you come ccross any of these errors just press the windows button on your computer and search for tsc
+    if you see the location of the tsc file just copy the path and add it to your environment variables and you are good to go
+
+** To create a typescript configuration file simply run the following command 
+tsc --init
+this will generate a tsconfig.json file where you can change whatever settings you want to
+
+** To compile your typescript file to javascript file simply run the following command
+tsc target-file-name 
+for example: tsc index -where index.ts is the targeted typescript file that you want to complie to javascript 
+but if you want to compile every file in your current working directory simply run the following command
+tsc
